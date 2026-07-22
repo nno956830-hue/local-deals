@@ -1,138 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Business Name] | Professional Painters in [City, State]</title>
-    <!-- Correctly Working Tailwind Play CDN for Raw HTML Single-Files -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            blue: '#2563eb',
-                            dark: '#0f172a',
-                            emerald: '#10b981'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Modern Premium Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-900 antialiased pb-24 md:pb-0">
+// components/ThreeScene.js
+'use client';
 
-    <!-- Premium Desktop & Mobile Header -->
-    <header class="sticky top-0 bg-white/90 backdrop-blur-md shadow-sm z-50 border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex justify-between items-center">
-            <div class="font-black text-xl tracking-tight text-blue-600 uppercase">[BUSINESS NAME]</div>
-            <a href="tel:[Phone Number]" class="hidden md:inline-flex bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl text-sm transition-all shadow-md">
-                Call: [Phone Number]
-            </a>
-        </div>
-    </header>
+import React, { useRef, useMemo, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Preload } from '@react-three/drei';
+import * as THREE from 'three';
 
-    <!-- Split Desktop/Mobile Hero Layout -->
-    <section class="relative bg-slate-900 text-white py-16 md:py-28 px-4 overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1200&q=80');"></div>
-        <div class="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center z-10">
-            
-            <!-- Left Side: Copy -->
-            <div class="space-y-6 text-center md:text-left">
-                <span class="inline-block bg-blue-500/20 text-blue-400 font-semibold text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-blue-500/30">Premium Residential & Commercial</span>
-                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-tight">Top-Rated House Painters In <span class="text-blue-400">[City, State]</span></h1>
-                <p class="text-base sm:text-lg text-slate-300 max-w-xl mx-auto md:mx-0">Flawless interior and exterior painting. Licensed, insured, and dedicated to clean lines that make your home stand out.</p>
-                <div class="pt-4 hidden md:block">
-                    <a href="tel:[Phone Number]" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-lg py-4 px-8 rounded-xl shadow-lg transition transform active:scale-95">
-                        Get A Free Estimate
-                    </a>
-                </div>
-            </div>
+// High-performance procedural wave plane
+function LiquidPlane() {
+  const meshRef = useRef();
+  const materialRef = useRef();
+  const { size } = useThree();
 
-            <!-- Right Side: Desktop Showpiece Image -->
-            <div class="hidden md:block relative">
-                <div class="absolute inset-0 bg-blue-600 rounded-3xl transform rotate-3 scale-102 opacity-30"></div>
-                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80" class="relative rounded-3xl shadow-2xl object-cover h-[400px] w-full border border-slate-700" alt="Interior Painting">
-            </div>
-        </div>
-    </section>
+  // Track the mouse location with an interpolation target
+  const mouse = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+  const scroll = useRef({ current: 0, target: 0 });
 
-    <!-- Features / Why Choose Us -->
-    <section class="max-w-6xl mx-auto px-4 py-16 sm:py-24">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-slate-800 mb-12">Why Local Homeowners Choose Us</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-2xl shadow-md md:shadow-lg border border-slate-100 space-y-4 hover:border-blue-500/30 transition-all">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">✓</div>
-                <h3 class="font-bold text-lg text-slate-900">100% Clean Guarantee</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">We cover your floors, protect your furniture, and leave your property cleaner than we found it. No mess, ever.</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-md md:shadow-lg border border-slate-100 space-y-4 hover:border-blue-500/30 transition-all">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">✓</div>
-                <h3 class="font-bold text-lg text-slate-900">Premium Materials Only</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">We exclusively use premium, long-lasting paints to ensure deep color saturation and maximum weather resistance.</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-md md:shadow-lg border border-slate-100 space-y-4 hover:border-blue-500/30 transition-all">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">✓</div>
-                <h3 class="font-bold text-lg text-slate-900">Transparent Flat Pricing</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">No hidden fees, no surprise costs. The price we quote you before we start is the exact price you pay when we finish.</p>
-            </div>
-        </div>
-    </section>
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Normalize coordinate space (-1 to 1)
+      mouse.current.targetX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
 
-    <!-- Project Gallery Section -->
-    <section class="bg-slate-100 py-16 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center text-slate-800 mb-4">Our Recent Work</h2>
-            <p class="text-center text-slate-600 text-sm max-w-md mx-auto mb-12">From sharp exterior trim to modern accent walls, we bring precision to every square inch.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-2 rounded-2xl shadow-md overflow-hidden group">
-                    <div class="aspect-video bg-slate-300 rounded-xl overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Interior Painting">
-                    </div>
-                    <div class="p-4 text-slate-800 font-semibold text-sm">Flawless Interior Living Rooms</div>
-                </div>
-                <div class="bg-white p-2 rounded-2xl shadow-md overflow-hidden group">
-                    <div class="aspect-video bg-slate-300 rounded-xl overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Exterior Painting">
-                    </div>
-                    <div class="p-4 text-slate-800 font-semibold text-sm">Durable Weather-Proof Exteriors</div>
-                </div>
-                <div class="bg-white p-2 rounded-2xl shadow-md overflow-hidden group">
-                    <div class="aspect-video bg-slate-300 rounded-xl overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Trim Painting">
-                    </div>
-                    <div class="p-4 text-slate-800 font-semibold text-sm">Precision Cabinet & Trim Refinishing</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    const handleScroll = () => {
+      // Track scroll percentage relative to window height
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll > 0) {
+        scroll.current.target = window.scrollY / maxScroll;
+      }
+    };
 
-    <!-- Bottom Action Banner -->
-    <section class="max-w-5xl mx-auto px-4 my-16">
-        <div class="bg-blue-600 rounded-3xl p-8 sm:p-12 text-center text-white space-y-6 shadow-xl relative overflow-hidden">
-            <h2 class="text-3xl font-extrabold max-w-xl mx-auto">Ready to transform your property?</h2>
-            <p class="text-blue-100 text-sm sm:text-base max-w-md mx-auto">Call today to lock in a guaranteed flat-rate estimate for your home or commercial building.</p>
-            <a href="tel:[Phone Number]" class="inline-block bg-white text-blue-600 font-extrabold py-4 px-10 rounded-xl shadow-md text-md hover:bg-slate-50 transition transform active:scale-95">
-                📞 [Phone Number]
-            </a>
-        </div>
-    </section>
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    <!-- Fixed Mobile Floating "Tap to Call" Button (Hidden on Desktop) -->
-    <div class="fixed bottom-4 inset-x-4 md:hidden z-50">
-        <a href="tel:[Phone Number]" class="flex items-center justify-center gap-2 bg-emerald-500 text-white font-black text-lg py-4 px-6 rounded-2xl shadow-2xl active:scale-95 transition-all">
-            📞 TAP TO CALL NOW
-        </a>
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Custom shader uniforms
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0.0 },
+    uMouse: { value: new THREE.Vector2(0, 0) },
+    uScroll: { value: 0.0 },
+    uResolution: { value: new THREE.Vector2(size.width, size.height) }
+  }), []);
+
+  // Smooth out coordinate tracking and update time in the render loop
+  useFrame((state) => {
+    const { clock } = state;
+    
+    // Smooth lerping for mouse inputs
+    mouse.current.x += (mouse.current.targetX - mouse.current.x) * 0.05;
+    mouse.current.y += (mouse.current.targetY - mouse.current.y) * 0.05;
+
+    // Smooth lerping for scroll position
+    scroll.current.current += (scroll.current.target - scroll.current.current) * 0.1;
+
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = clock.getElapsedTime() * 0.35;
+      materialRef.current.uniforms.uMouse.value.set(mouse.current.x, mouse.current.y);
+      materialRef.current.uniforms.uScroll.value = scroll.current.current;
+    }
+
+    // Dynamic rotation shift based on cursor
+    if (meshRef.current) {
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, mouse.current.x * 0.15, 0.05);
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, -0.4 + (scroll.current.current * 0.3), 0.05);
+    }
+  });
+
+  // Custom Vertex Shader
+  const vertexShader = `
+    uniform float uTime;
+    uniform float uScroll;
+    uniform vec2 uMouse;
+    varying vec2 vUv;
+    varying vec3 vNormal;
+    varying vec3 vViewPosition;
+
+    // Simplex noise helper
+    vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+    float snoise(vec2 v){
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+               -0.577350269189626, 0.024390243902439);
+      vec2 i  = floor(v + dot(v, C.yy) );
+      vec2 x0 = v -   i + dot(i, C.xx) ;
+      vec2 i1;
+      i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxzz;
+      x12.xy -= i1;
+      i = mod(i, 289.0);
+      vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+        + i.x + vec3(0.0, i1.x, 1.0 ));
+      vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
+        dot(x12.zw,x12.zw)), 0.0);
+      m = m*m ;
+      m = m*m ;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 a0 = x - floor(x + 0.5);
+      vec3 g = a0.xyw * x12.xzw + h.xyw * x12.yzw;
+      vec3 t = 1.0 - 1.5*C.yyy;
+      vec3 s = 1.0 - 1.5*vec3(dot(g.xy,g.xy), dot(g.z,g.z), 0.0);
+      float n = 120.0 * dot(m, g);
+      return n;
+    }
+
+    void main() {
+      vUv = uv;
+      
+      // Morph position using noise patterns
+      vec3 pos = position;
+      float noiseVal1 = snoise(pos.xy * 0.15 + uTime * 0.6);
+      float noiseVal2 = snoise(pos.yx * 0.08 - uTime * 0.3 + uScroll * 1.5);
+      
+      // Interaction deformation mapping based on cursor proximity
+      float distToMouse = distance(uv - vec2(0.5), uMouse * 0.4);
+      float mouseImpact = smoothstep(0.8, 0.0, distToMouse);
+      
+      pos.z += (noiseVal1 * 0.7 + noiseVal2 * 0.3) * 1.2;
+      pos.z += mouseImpact * 0.5;
+
+      vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+      gl_Position = projectionMatrix * mvPosition;
+      
+      vNormal = normalMatrix * normal;
+      vViewPosition = -mvPosition.xyz;
+    }
+  `;
+
+  // Custom Fragment Shader for luxurious, dark metallic silk aesthetics
+  const fragmentShader = `
+    uniform vec2 uResolution;
+    varying vec2 vUv;
+    varying vec3 vNormal;
+    varying vec3 vViewPosition;
+
+    void main() {
+      // Normalize directional inputs
+      vec3 normal = normalize(vNormal);
+      vec3 viewDir = normalize(vViewPosition);
+
+      // Elegant dark architecture color gradients (Obsidian, Nickel, Champagne accents)
+      vec3 baseDark = vec3(0.04, 0.04, 0.05);
+      vec3 metallicHighlight = vec3(0.24, 0.22, 0.20);
+      vec3 warmAccent = vec3(0.75, 0.58, 0.40); // Champagne Gold
+
+      // Simple specular/fresnel calculation
+      float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.5);
+      
+      // Calculate dynamic reflection patterns
+      vec3 color = mix(baseDark, metallicHighlight, fresnel);
+      color += warmAccent * fresnel * 0.18;
+
+      // Add high-end soft-matte noise overlay
+      float noiseFactor = fract(sin(dot(vUv, vec2(12.9898, 78.233))) * 43758.5453);
+      color += vec3(noiseFactor * 0.015);
+
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  return (
+    <mesh ref={meshRef} rotation={[-0.4, 0, 0]} position={[0, -0.5, 0]}>
+      <planeGeometry args={[16, 16, 64, 64]} />
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={uniforms}
+        wireframe={false}
+        transparent={true}
+      />
+    </mesh>
+  );
+}
+
+// Full background Canvas with optimal camera configuration and lighting overrides
+export default function ThreeScene() {
+  return (
+    <div className="w-full h-full bg-[#030303]">
+      <Canvas
+        camera={{ position: [0, 0, 7], fov: 50 }}
+        gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
+      >
+        <ambientLight intensity={0.15} />
+        <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ebd5c1" />
+        <pointLight position={[-10, -5, -5]} intensity={0.5} color="#556677" />
+        <LiquidPlane />
+        <Preload all />
+      </Canvas>
     </div>
-
-</body>
-</html>
+  );
+}
