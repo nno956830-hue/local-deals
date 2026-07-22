@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Luxury Contracting | High-End Finishes</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: #ffffff; }
+    h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="relative overflow-x-hidden antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- 3D WebGL Background Canvas -->
+  <div id="canvas-container" class="fixed inset-0 z-0 pointer-events-none w-full h-full"></div>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="font-serif text-2xl font-bold tracking-tight text-white">APEX <span class="text-amber-400 font-sans text-xs uppercase tracking-widest ml-1">Finishes</span></span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#services" class="hover:text-amber-400 transition-colors">Services</a>
+        <a href="#estimator" class="hover:text-amber-400 transition-colors">Instant Quote</a>
+        <a href="#booking" class="hover:text-amber-400 transition-colors">Book Consult</a>
+      </nav>
+      <button onclick="openBooking()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-semibold rounded-full text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-amber-500/20">
+        Book Audit
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-20">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 backdrop-blur-md mb-6">
+      <span class="text-amber-400 text-xs font-semibold uppercase tracking-widest">Architectural Grade Contracting</span>
+    </div>
+    
+    <h1 class="text-5xl md:text-8xl font-serif font-bold tracking-tight text-white mb-6 max-w-5xl leading-tight">
+      Luxury Finish, <br/><span class="italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600">Lasting Value.</span>
+    </h1>
+    
+    <p class="max-w-2xl text-base md:text-lg text-gray-300 mb-10 font-light leading-relaxed">
+      Transforming high-end residential properties with precision painting, structural restoration, interactive estimation, and seamless booking.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+      <a href="#estimator" class="px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-semibold rounded-full text-sm transition-all duration-300 shadow-xl shadow-amber-500/20 text-center">
+        Calculate Instant Estimate
+      </a>
+      <button onclick="openBooking()" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-full border border-white/20 backdrop-blur-md text-sm transition-all duration-300">
+        Schedule Private Consultation
+      </button>
+    </div>
+  </section>
+
+  <!-- Interactive Quote Calculator Section -->
+  <section id="estimator" class="relative z-10 py-24 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-serif font-bold mb-4">Instant Project Estimator</h2>
+        <p class="text-gray-400">Select your project square footage and service type for an immediate rough estimate.</p>
+      </div>
+
+      <div class="bg-neutral-900/80 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
+        <div class="space-y-8">
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-3">
+              <span class="text-gray-300">Estimated Area (Square Feet)</span>
+              <span id="sqft-val" class="text-amber-400 font-bold text-lg">2,500 sq ft</span>
+            </div>
+            <input type="range" id="sqft-slider" min="500" max="5000" step="100" value="2500" 
+              class="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-3">Service Scope</label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <button onclick="setService('interior', 2.2)" id="btn-interior" class="service-btn p-4 rounded-xl border border-amber-500 bg-amber-500/10 text-amber-400 font-medium text-sm text-center">
+                Interior Refresh
+              </button>
+              <button onclick="setService('exterior', 2.8)" id="btn-exterior" class="service-btn p-4 rounded-xl border border-white/10 bg-neutral-800 text-gray-300 font-medium text-sm text-center hover:border-amber-500/50">
+                Exterior Coating
+              </button>
+              <button onclick="setService('full', 3.5)" id="btn-full" class="service-btn p-4 rounded-xl border border-white/10 bg-neutral-800 text-gray-300 font-medium text-sm text-center hover:border-amber-500/50">
+                Full Architectural Finish
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <span class="text-xs text-gray-400 block uppercase tracking-wider">Estimated Investment</span>
+              <span id="quote-price" class="text-4xl font-serif font-bold text-amber-400">$5,500 - $6,200</span>
+            </div>
+            <button onclick="openBookingWithEstimate()" class="w-full md:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-semibold rounded-full text-sm transition-all shadow-lg shadow-amber-500/20">
+              Lock In This Rate & Book
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Step Booking Modal Wizard -->
+  <div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl hidden">
+    <div class="bg-neutral-900 border border-white/10 rounded-3xl p-8 max-w-lg w-full relative shadow-2xl">
+      <button onclick="closeBooking()" class="absolute top-6 right-6 text-gray-400 hover:text-white">✕</button>
+      
+      <!-- Step 1: Info -->
+      <div id="modal-step-1">
+        <h3 class="text-2xl font-serif font-bold mb-2">Schedule On-Site Audit</h3>
+        <p class="text-xs text-gray-400 mb-6">Enter your details to dispatch an estimator to your property.</p>
+        <div class="space-y-4">
+          <input type="text" id="cust-name" placeholder="Full Name" class="w-full px-4 py-3 rounded-xl bg-neutral-800 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500">
+          <input type="email" id="cust-email" placeholder="Email Address" class="w-full px-4 py-3 rounded-xl bg-neutral-800 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500">
+          <input type="tel" id="cust-phone" placeholder="Phone Number" class="w-full px-4 py-3 rounded-xl bg-neutral-800 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500">
+          <button onclick="submitBooking()" class="w-full py-4 bg-amber-500 hover:bg-amber-400 text-black font-semibold rounded-xl text-sm transition-all shadow-lg shadow-amber-500/20">
+            Confirm Booking Request
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Automated Confirmation Screen -->
+      <div id="modal-step-2" class="hidden text-center py-6">
+        <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-amber-500/40">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <h3 class="text-2xl font-serif font-bold mb-2 text-white">Booking Confirmed!</h3>
+        <p class="text-xs text-amber-400 font-mono mb-4" id="ref-code">Ref ID: #APX-7821</p>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6">
+          Thank you! An automated SMS confirmation and calendar invite have been dispatched to your email.
+        </p>
+        <button onclick="closeBooking()" class="px-6 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-full text-xs">
+          Close Window
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js Ambient Fluid Background Logic -->
+  <script>
+    // 3D Scene Setup
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 7;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.PlaneGeometry(16, 16, 64, 64);
+    
+    const uniforms = {
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uScroll: { value: 0 }
+    };
+
+    const vertexShader = `
+      uniform float uTime;
+      uniform float uScroll;
+      uniform vec2 uMouse;
+      varying vec2 vUv;
+      varying vec3 vNormal;
+      varying vec3 vViewPosition;
+
+      vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+      float snoise(vec2 v){
+        const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+        vec2 i  = floor(v + dot(v, C.yy) );
+        vec2 x0 = v -   i + dot(i, C.xx) ;
+        vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod(i, 289.0);
+        vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+        vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+        m = m*m; m = m*m;
+        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+        vec3 h = abs(x) - 0.5;
+        vec3 a0 = x - floor(x + 0.5);
+        vec3 g = a0.xyw * x12.xzw + h.xyw * x12.yzw;
+        return 120.0 * dot(m, g);
+      }
+
+      void main() {
+        vUv = uv;
+        vec3 pos = position;
+        float noiseVal1 = snoise(pos.xy * 0.15 + uTime * 0.5);
+        float noiseVal2 = snoise(pos.yx * 0.08 - uTime * 0.2 + uScroll * 1.5);
+        float distToMouse = distance(uv - vec2(0.5), uMouse * 0.4);
+        float mouseImpact = smoothstep(0.8, 0.0, distToMouse);
+        pos.z += (noiseVal1 * 0.7 + noiseVal2 * 0.3) * 1.2 + mouseImpact * 0.4;
+
+        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+        gl_Position = projectionMatrix * mvPosition;
+        vNormal = normalMatrix * normal;
+        vViewPosition = -mvPosition.xyz;
+      }
+    `;
+
+    const fragmentShader = `
+      varying vec2 vUv;
+      varying vec3 vNormal;
+      varying vec3 vViewPosition;
+
+      void main() {
+        vec3 normal = normalize(vNormal);
+        vec3 viewDir = normalize(vViewPosition);
+        vec3 baseDark = vec3(0.03, 0.03, 0.04);
+        vec3 metallicHighlight = vec3(0.22, 0.20, 0.18);
+        vec3 warmAccent = vec3(0.75, 0.58, 0.38);
+        float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.5);
+        vec3 color = mix(baseDark, metallicHighlight, fresnel) + warmAccent * fresnel * 0.2;
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms,
+      transparent: true
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.x = -0.4;
+    scene.add(mesh);
+
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    let scroll = { current: 0, target: 0 };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    window.addEventListener('scroll', () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll > 0) scroll.target = window.scrollY / maxScroll;
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+      
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      scroll.current += (scroll.target - scroll.current) * 0.1;
+
+      uniforms.uTime.value = elapsedTime * 0.35;
+      uniforms.uMouse.value.set(mouse.x, mouse.y);
+      uniforms.uScroll.value = scroll.current;
+
+      mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, mouse.x * 0.15, 0.05);
+      mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, -0.4 + (scroll.current * 0.3), 0.05);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Interactive Calculator JS
+    let currentRate = 2.2;
+    const slider = document.getElementById('sqft-slider');
+    const sqftVal = document.getElementById('sqft-val');
+    const quotePrice = document.getElementById('quote-price');
+
+    function updateQuote() {
+      const sqft = parseInt(slider.value);
+      sqftVal.innerText = sqft.toLocaleString() + ' sq ft';
+      const low = Math.round(sqft * currentRate);
+      const high = Math.round(low * 1.15);
+      quotePrice.innerText = `$${low.toLocaleString()} - $${high.toLocaleString()}`;
+    }
+
+    slider.addEventListener('input', updateQuote);
+
+    function setService(type, rate) {
+      currentRate = rate;
+      document.querySelectorAll('.service-btn').forEach(btn => {
+        btn.className = 'service-btn p-4 rounded-xl border border-white/10 bg-neutral-800 text-gray-300 font-medium text-sm text-center hover:border-amber-500/50';
+      });
+      document.getElementById('btn-' + type).className = 'service-btn p-4 rounded-xl border border-amber-500 bg-amber-500/10 text-amber-400 font-medium text-sm text-center';
+      updateQuote();
+    }
+
+    // Booking Modal JS
+    function openBooking() {
+      document.getElementById('booking-modal').classList.remove('hidden');
+      document.getElementById('modal-step-1').classList.remove('hidden');
+      document.getElementById('modal-step-2').classList.add('hidden');
+    }
+
+    function openBookingWithEstimate() {
+      openBooking();
+    }
+
+    function closeBooking() {
+      document.getElementById('booking-modal').classList.add('hidden');
+    }
+
+    function submitBooking() {
+      const randomId = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('ref-code').innerText = 'Ref ID: #APX-' + randomId;
+      document.getElementById('modal-step-1').classList.add('hidden');
+      document.getElementById('modal-step-2').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
