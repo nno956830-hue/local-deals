@@ -3,533 +3,585 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMA SKIN | Skin, Reimagined</title>
-    <meta name="description" content="Science-powered hydration engineered for luminous skin.">
+    <title>LUMA SKIN | The Molecular Ritual</title>
+    <meta name="description" content="Luxury biotechnology meets clinical skincare. An award-winning interactive experience.">
+    
+    <!-- Luxury Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&family=Manrope:wght@300;500&family=Galada&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@100;200;300;400;500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <!-- High-Performance Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
     <style>
         :root {
-            --bg-color: #fdfcf0;
-            --text-color: #1a1a1a;
-            --accent-color: #d4af37; /* Champagne */
-            --muted-color: rgba(26, 26, 26, 0.6);
-            --glass-bg: rgba(255, 255, 255, 0.4);
-            --glass-border: rgba(0, 0, 0, 0.05);
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Galada', cursive;
-            --font-editorial: 'Outfit', sans-serif;
-
-            /* Dynamic Background - Luxury High Key */
-            --bg-inner: #ffffff;
-            --bg-mid: #f7f3ed;
-            --bg-outer: #efebdf;
+            --color-pearl: #FFFFFF;
+            --color-ivory: #FDFBF7;
+            --color-sand: #E8E4DE;
+            --color-stone: #D1CDC7;
+            --color-champagne: #C5A059;
+            --text-primary: #1A1A1A;
+            --text-muted: rgba(26, 26, 26, 0.4);
+            
+            --bg-inner: #FFFFFF;
+            --bg-mid: #F8F6F2;
+            --bg-outer: #EAE7E1;
+            
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --glass-blur: blur(40px);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            cursor: none; /* Custom premium cursor */
         }
 
         body {
-            background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            overflow: hidden;
+            background: var(--bg-inner);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
             height: 100vh;
-            transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100vw;
         }
 
-        /* Bubble/Orb styling */
-        #bubbles-container {
+        /* --- ATMOSPHERIC ENVIRONMENT --- */
+        .living-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg-inner);
         }
 
-        .bubble-img {
+        .bg-gradient {
             position: absolute;
+            width: 150vw;
+            height: 150vh;
+            top: -25%;
+            left: -25%;
+            filter: blur(100px);
+            opacity: 0.6;
+            background: radial-gradient(circle at center, var(--bg-mid) 0%, transparent 70%);
             pointer-events: none;
-            filter: blur(2px) brightness(1.2);
         }
 
-        @keyframes floatUpImg {
-            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
-            20% { opacity: 0.3; }
-            80% { opacity: 0.3; }
-            100% { transform: translateY(-110vh) translateX(50px) scale(1.5); opacity: 0; }
+        .vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.03) 100%);
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* Header - Editorial Glass */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- PREMIUM CURSOR --- */
+        #cursor-follower {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--text-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
+            opacity: 0.3;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
+            padding: 2.5rem 5%;
             position: fixed;
-            top: 0; width: 100%; z-index: 100;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
             font-weight: 400;
-            font-size: 1.4rem;
-            font-family: var(--font-editorial);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-
-        .nav {
-            display: flex;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.4rem;
-            border-radius: 100px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .nav-item {
-            font-family: 'Manrope', sans-serif;
-            color: var(--muted-color);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.6rem 1.4rem;
-            border-radius: 100px;
-            transition: all 0.4s ease;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: var(--text-color);
-            color: #fff;
-        }
-
-        .contact-btn {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--text-color);
-            padding: 0.7rem 1.8rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .contact-btn:hover {
-            background: var(--text-color);
-            color: #fff;
-        }
-
-        /* Hero Layout */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 5%;
-        }
-
-        .hero-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            width: 100%;
-            height: 100%;
             position: relative;
         }
 
-        /* Editorial Typography */
-        .main-title, .side-title {
-            font-family: var(--font-heading);
-            font-size: clamp(4rem, 8vw, 10rem);
-            line-height: 0.9;
-            color: var(--text-color);
+        .nav-editorial {
+            display: flex;
+            gap: 4rem;
         }
 
-        .outline {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--text-color);
-            font-family: var(--font-editorial);
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
             font-weight: 300;
-            font-size: 0.8em;
-            letter-spacing: 0.05em;
+            opacity: 0.6;
+            transition: opacity 0.5s, letter-spacing 0.5s;
         }
 
-        /* Floating Elements */
-        .leaves-container, .berries-container, .berries-container-bg {
+        .nav-link:hover {
+            opacity: 1;
+            letter-spacing: 0.45em;
+        }
+
+        /* --- PRODUCT STAGE --- */
+        .product-environment {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            perspective: 2000px;
+        }
+
+        .cosmetic-stage-floor {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            bottom: 10%;
+            width: 80vw;
+            height: 20vh;
+            background: radial-gradient(50% 50% at 50% 50%, rgba(26, 26, 26, 0.05) 0%, transparent 100%);
+            transform: rotateX(80deg);
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .model-container {
+            width: 80vw;
+            height: 90vh;
+            outline: none;
+            --poster-color: transparent;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* --- EDITORIAL CHAPTERS --- */
+        .content-layer {
+            position: relative;
+            z-index: 10;
             pointer-events: none;
         }
 
-        .leaf { filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)) grayscale(0.2) opacity(0.6); }
-        .berry { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05)); }
-
-        /* Left Column */
-        .hero-left {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 8rem 0;
-            gap: 2.5rem;
-            z-index: 10;
-        }
-
-        .description {
-            color: var(--muted-color);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            max-width: 380px;
-            font-weight: 300;
-            font-family: var(--font-editorial);
-        }
-
-        .primary-btn {
+        .chapter {
+            height: 100vh;
+            padding: 0 10%;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            background: var(--text-color);
-            color: #fff;
-            border: none;
-            padding: 0.5rem 0.5rem 0.5rem 2rem;
-            border-radius: 100px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 0.8rem;
-            cursor: pointer;
-            width: fit-content;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .primary-btn:hover { transform: scale(1.05); }
-
-        .plus-icon {
-            background: #fff;
-            color: var(--text-color);
-            width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%;
-        }
-
-        /* Center Product */
-        .hero-center {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 5; pointer-events: none;
-        }
-
-        .main-product-3d {
-            width: 75vw; height: 75vh;
-            transform: translate(-50%, -50%) rotate(-5deg);
-            position: fixed; top: 50%; left: 50%;
+        .chapter.active {
             pointer-events: auto;
-            --poster-color: transparent;
         }
 
-        /* Right Column - Product Swatches */
-        .hero-right {
+        .chapter-content {
+            max-width: 600px;
+        }
+
+        .label-micro {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            color: var(--color-champagne);
+            margin-bottom: 2rem;
+            display: block;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .title-display {
+            font-family: var(--font-serif);
+            font-size: clamp(4rem, 8vw, 10rem);
+            line-height: 0.9;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .body-editorial {
+            font-size: 1.1rem;
+            line-height: 2;
+            font-weight: 200;
+            color: var(--text-muted);
+            max-width: 400px;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* --- INTERACTIVE SELECTOR --- */
+        .formula-dock {
+            position: fixed;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-end;
-            text-align: right;
-            height: 100%;
-            padding: 8rem 0; width: 400px; z-index: 10;
+            gap: 1.5rem;
+            z-index: 100;
         }
 
-        .card {
-            background: var(--glass-bg);
+        .formula-swatch {
+            background: var(--glass-white);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            padding: 1.5rem; padding-top: 6rem;
-            border-radius: 20px;
-            width: 130px;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            backdrop-filter: blur(10px);
+            padding: 2rem;
+            width: 260px;
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:hover { transform: translateY(-10px); background: #fff; border-color: var(--accent-color); }
-        .card.active { border-color: var(--accent-color); background: #fff; }
-
-        .card img {
-            width: 140px; margin-top: -10rem;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
-            transition: transform 0.6s ease;
+        .formula-swatch::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.4) 50%, transparent 55%);
+            transform: rotate(-45deg);
+            transition: transform 0s;
         }
 
-        .card-info {
-            font-size: 0.65rem;
+        .formula-swatch:hover::after {
+            transform: translate(100%, 100%) rotate(-45deg);
+            transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .formula-swatch.active {
+            background: white;
+            transform: translateX(-30px);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.06);
+            border-color: var(--color-champagne);
+        }
+
+        .swatch-index {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--color-champagne);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-            margin-top: 1rem;
-            text-align: center;
         }
 
-        .award-badge {
-            display: flex; align-items: center; gap: 1rem; margin-top: auto;
+        .swatch-title {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 400;
         }
-        .award-text { display: flex; flex-direction: column; text-align: left; }
-        .award-title { font-size: 0.6rem; letter-spacing: 0.15em; font-weight: 700; }
-        .award-subtitle { font-size: 0.75rem; font-weight: 300; font-family: var(--font-editorial); }
 
-        @media (max-width: 1200px) {
-            .main-product-3d { width: 90vw; height: 60vh; }
-            .hero-content { flex-direction: column; align-items: center; text-align: center; }
-            .hero-right, .hero-left { width: 100%; align-items: center; text-align: center; }
-            .main-title { font-size: 4rem; }
+        /* --- THE WOW MOMENT: MOLECULAR MIST --- */
+        #mist-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .chapter { padding-top: 15vh; align-items: flex-start; text-align: center; justify-content: center; }
+            .chapter-content { max-width: 100%; }
+            .formula-dock { bottom: 5%; top: auto; right: 0; left: 0; flex-direction: row; justify-content: center; transform: none; width: 100%; }
+            .formula-swatch { width: 140px; padding: 1rem; }
+            .swatch-title { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
+    <div class="film-grain"></div>
+    <div class="vignette"></div>
+    <div id="cursor-follower"></div>
+    <div id="cursor-ring"></div>
 
-    <div id="bubbles-container"></div>
+    <div class="living-bg">
+        <div class="bg-gradient" id="grad-1"></div>
+        <div class="bg-gradient" id="grad-2"></div>
+    </div>
 
     <header class="header">
-        <div class="logo">
-            <span>Luma Skin</span>
-        </div>
-        <nav class="nav glass">
-            <a href="#" class="nav-item active">Products</a>
-            <a href="#" class="nav-item">Science</a>
-            <a href="#" class="nav-item">Ingredients</a>
-            <a href="#" class="nav-item">Results</a>
-            <a href="#" class="nav-item">Reviews</a>
+        <div class="logo">LUMA</div>
+        <nav class="nav-editorial">
+            <a href="#" class="nav-link active">Atelier</a>
+            <a href="#" class="nav-link">Science</a>
+            <a href="#" class="nav-link">Ritual</a>
+            <a href="#" class="nav-link">Inquiry</a>
         </nav>
-        <button class="contact-btn">Contact</button>
     </header>
 
-    <main class="hero">
-        <div class="hero-content">
-            <!-- Floating Botanical Stems -->
-            <div class="leaves-container">
-                <model-viewer class="leaf l1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
-                <model-viewer class="leaf l2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
-                <model-viewer class="leaf l3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
-            </div>
+    <div class="product-environment">
+        <div class="cosmetic-stage-floor"></div>
+        <model-viewer id="main-bottle" 
+            src="https://modelviewer.dev/shared-assets/models/CosmeticBottle.glb"
+            exposure="1.2"
+            environment-image="neutral"
+            shadow-intensity="0.8"
+            shadow-softness="1"
+            camera-orbit="0deg 88deg 105%"
+            interaction-prompt="none"
+            disable-zoom
+            class="model-container">
+        </model-viewer>
+    </div>
 
-            <div class="hero-left">
-                <h1 class="main-title">
-                    <span class="outline">Skin,</span><br>Reimagined
-                </h1>
-                <p class="description" id="hero-desc">
-                    Science-powered hydration engineered for luminous skin. Experience clinical grade serums in elegant textures.
-                </p>
-                <button class="primary-btn">
-                    Discover Collection <span class="plus-icon">+</span>
-                </button>
+    <canvas id="mist-canvas"></canvas>
 
-                <div class="award-badge">
-                    <div class="award-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <circle cx="12" cy="12" r="10" stroke-width="1"/>
-                            <path d="M8 12l3 3 5-5" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="award-text">
-                        <span class="award-title">VOGUE BEAUTY</span>
-                        <span class="award-subtitle">EDITORS CHOICE 2025</span>
-                    </div>
-                </div>
+    <main class="content-layer">
+        <!-- Chapter 1: The Intro -->
+        <section class="chapter active" id="chapter-intro">
+            <div class="chapter-content">
+                <span class="label-micro">Molecular Skincare Atelier</span>
+                <h1 class="title-display">Skin,<br><i>Reimagined.</i></h1>
+                <p class="body-editorial">Clinical precision meets editorial elegance. We engineer the future of luminosity through molecular biotechnology.</p>
             </div>
-
-            <div class="hero-center">
-                <model-viewer id="product-model" 
-                    src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/deit_soda2.glb"
-                    camera-controls disable-zoom shadow-intensity="0" 
-                    environment-image="neutral" exposure="1.2" 
-                    interaction-prompt="none" camera-orbit="0deg 90deg 380%" 
-                    field-of-view="30deg" class="main-product-3d">
-                </model-viewer>
-            </div>
-
-            <!-- Floating Capsules (using cherry/blueberry model foundations) -->
-            <div class="berries-container">
-                <model-viewer class="berry b1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" exposure="0.8"></model-viewer>
-                <model-viewer class="berry b2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" exposure="0.8"></model-viewer>
-                <model-viewer class="berry b3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/cherry.glb" exposure="0.8"></model-viewer>
-                <model-viewer class="berry b4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blueberry.glb" exposure="0.8"></model-viewer>
-            </div>
-
-            <div class="hero-right">
-                <div class="product-carousel">
-                    <div class="carousel-cards">
-                        <div class="card active" data-product="hydration" data-color-top="#f0f9ff" data-color-mid="#e0f2fe" data-color-bot="#bae6fd">
-                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Blue%20Soda.png" alt="Hydration Serum">
-                            <div class="card-info">Hydration Serum</div>
-                        </div>
-                        <div class="card" data-product="vitaminc" data-color-top="#fffaf0" data-color-mid="#fef3c7" data-color-bot="#fde68a">
-                            <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/Green%20Soda.png" alt="Vitamin C Burst">
-                            <div class="card-info">Vitamin C Burst</div>
-                        </div>
-                    </div>
-                </div>
-                <h2 class="side-title"><span class="outline">Science</span><br>Backed</h2>
-            </div>
-        </div>
+        </section>
     </main>
 
+    <aside class="formula-dock">
+        <div class="formula-swatch active" data-formula="hydration" data-accent="#C5A059">
+            <span class="swatch-index">Ritual 01</span>
+            <span class="swatch-title">Molecular Hydration</span>
+        </div>
+        <div class="formula-swatch" data-formula="radiance" data-accent="#D8B4A0">
+            <span class="swatch-index">Ritual 02</span>
+            <span class="swatch-title">Vitamin C Complex</span>
+        </div>
+        <div class="formula-swatch" data-formula="renewal" data-accent="#A0B1D8">
+            <span class="swatch-index">Ritual 03</span>
+            <span class="swatch-title">Cellular Night Repair</span>
+        </div>
+    </aside>
+
     <script>
-        const modelViewer = document.querySelector('#product-model');
-        const berriesContainer = document.querySelector('.berries-container');
-        const leavesContainer = document.querySelector('.leaves-container');
-        const cards = document.querySelectorAll('.card');
-        const allFloating = document.querySelectorAll('.berry, .leaf');
-        const descText = document.querySelector('#hero-desc');
+        /**
+         * PRESERVED ENGINEERING: GSAP Interaction Foundation
+         */
+        const bottle = document.querySelector('#main-bottle');
+        const follower = document.querySelector('#cursor-follower');
+        const ring = document.querySelector('#cursor-ring');
+        const swatches = document.querySelectorAll('.formula-swatch');
+        
+        let currentSpin = 0;
+        let isLocked = false;
+        let mouseX = 0, mouseY = 0;
 
-        let isSwitching = false;
-        let switchSpin = 0;
-        let blueTexture, greenTexture;
-
-        // Preload labels for the "bottles"
-        modelViewer.addEventListener('load', async () => {
-            blueTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/blue%20base%20color.jpg');
-            greenTexture = await modelViewer.createTexture('https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/green%20base%20color.jpg');
-            // Start as Hydration
-            modelViewer.model.materials[0].pbrMetallicRoughness.baseColorTexture.setTexture(blueTexture);
+        // --- PREMIUM CURSOR ENGINE ---
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            gsap.to(follower, { x: mouseX, y: mouseY, duration: 0.1 });
+            gsap.to(ring, { x: mouseX - 16, y: mouseY - 16, duration: 0.4, ease: "power3.out" });
         });
 
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                if (isSwitching || card.classList.contains('active')) return;
-                cards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                switchProduct(card.dataset.product, card.dataset);
-            });
-        });
-
-        function switchProduct(id, colors) {
-            isSwitching = true;
+        // --- ENTRANCE CHOREOGRAPHY ---
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 2.5 }});
             
-            // 1. Background Morph
-            gsap.to(document.body, {
-                '--bg-inner': colors.colorTop,
-                '--bg-mid': colors.colorMid,
-                '--bg-outer': colors.colorBot,
-                duration: 1.5,
-                ease: 'power2.inOut'
-            });
+            tl.to(".logo", { opacity: 1, y: 0, duration: 2 })
+              .from(".nav-link", { opacity: 0, y: -10, stagger: 0.1 }, "-=1.5")
+              .to("#main-bottle", { opacity: 1, y: 0, duration: 3 }, "-=2")
+              .to(".label-micro", { opacity: 1, y: 0 }, "-=2.5")
+              .to(".title-display", { opacity: 1, y: 0 }, "-=2.3")
+              .to(".body-editorial", { opacity: 1, y: 0 }, "-=2.1")
+              .from(".formula-swatch", { opacity: 0, x: 50, stagger: 0.2 }, "-=1.8");
 
-            // 2. Cinematic Spin & Texture Swap
-            const spinObj = { val: 0, blur: 0 };
-            gsap.to(spinObj, {
-                val: 360, blur: 10, duration: 0.8, ease: 'power2.in',
-                onUpdate: () => {
-                    switchSpin = spinObj.val;
-                    modelViewer.style.filter = `blur(${spinObj.blur}px)`;
+            initMist();
+            animateBackground();
+            renderLoop();
+        });
+
+        // --- DYNAMIC BACKGROUND ENGINE ---
+        function animateBackground() {
+            gsap.to("#grad-1", {
+                x: "20%", y: "10%", 
+                duration: 20, 
+                repeat: -1, 
+                yoyo: true, 
+                ease: "sine.inOut"
+            });
+            gsap.to("#grad-2", {
+                x: "-20%", y: "-10%", 
+                duration: 25, 
+                repeat: -1, 
+                yoyo: true, 
+                ease: "sine.inOut",
+                delay: 2
+            });
+        }
+
+        // --- PRODUCT SWITCHING ART DIRECTION ---
+        swatches.forEach(swatch => {
+            swatch.addEventListener('click', () => {
+                if (isLocked || swatch.classList.contains('active')) return;
+                isLocked = true;
+                
+                swatches.forEach(s => s.classList.remove('active'));
+                swatch.classList.add('active');
+
+                const formula = swatch.dataset.formula;
+                const accent = swatch.dataset.accent;
+                
+                performFormulaTransition(formula, accent);
+            });
+        });
+
+        function performFormulaTransition(type, color) {
+            const tl = gsap.timeline({ onComplete: () => isLocked = false });
+            
+            // 1. Cinematic Background Morph
+            const colorMap = {
+                hydration: { inner: "#FFFFFF", outer: "#EAE7E1" },
+                radiance: { inner: "#FFFBF5", outer: "#F2E8D5" },
+                renewal: { inner: "#F8F9FB", outer: "#D9E2EC" }
+            };
+
+            tl.to("body", { 
+                backgroundColor: colorMap[type].inner, 
+                duration: 2.5, 
+                ease: "power2.inOut" 
+            }, 0);
+
+            // 2. Camera / Bottle Event
+            const targetSpin = currentSpin + 360;
+            gsap.to({ val: currentSpin }, {
+                val: targetSpin,
+                duration: 2.2,
+                ease: "expo.inOut",
+                onUpdate: function() {
+                    currentSpin = this.targets()[0].val;
+                    // Soft blur event during rotation peak
+                    const progress = this.progress();
+                    const blurVal = Math.sin(progress * Math.PI) * 15;
+                    bottle.style.filter = `blur(${blurVal}px) saturate(${1 + Math.sin(progress * Math.PI) * 0.5})`;
                 },
+                onComplete: () => bottle.style.filter = 'none'
+            });
+
+            // 3. UI Content Swap with Stagger
+            tl.to(".chapter-content > *", { 
+                opacity: 0, y: -20, stagger: 0.05, duration: 0.6, 
                 onComplete: () => {
-                    const material = modelViewer.model.materials[0];
-                    material.pbrMetallicRoughness.baseColorTexture.setTexture(id === 'hydration' ? blueTexture : greenTexture);
-                    
-                    // Update text
-                    descText.innerText = id === 'hydration' 
-                        ? 'Science-powered hydration engineered for luminous skin. Experience clinical grade serums.' 
-                        : 'Advanced antioxidant formula to brighten and protect against daily stressors.';
-
-                    gsap.to(spinObj, {
-                        val: 720, blur: 0, duration: 1.2, ease: 'back.out(0.7)',
-                        onUpdate: () => {
-                            switchSpin = spinObj.val;
-                            modelViewer.style.filter = `blur(${spinObj.blur}px)`;
-                        },
-                        onComplete: () => {
-                            switchSpin = 0;
-                            modelViewer.style.filter = 'none';
-                            isSwitching = false;
-                        }
-                    });
+                    // Update text based on formula
+                    const data = {
+                        hydration: ["Molecular Hydration", "Formula NÂ° 01: Scientific moisture lock engineered for crystalline luminosity."],
+                        radiance: ["Vitamin C Complex", "Formula NÂ° 02: High-potency antioxidant complex optimized for tonal clarity."],
+                        renewal: ["Cellular Night Repair", "Formula NÂ° 03: Biomimetic lipid complex for mitochondrial repair."]
+                    };
+                    document.querySelector('.title-display').innerHTML = data[type][0].replace(' ', '<br>') + ',<br><i>Reimagined.</i>';
+                    document.querySelector('.body-editorial').innerText = data[type][1];
+                    gsap.to(".chapter-content > *", { opacity: 1, y: 0, stagger: 0.1, duration: 1 });
                 }
-            });
-
-            // 3. Floating Implode/Explode System
-            allFloating.forEach(obj => {
-                const rect = obj.getBoundingClientRect();
-                const cX = (window.innerWidth / 2 - rect.left - rect.width / 2);
-                const cY = (window.innerHeight / 2 - rect.top - rect.height / 2);
-
-                gsap.timeline()
-                    .to(obj, { x: cX, y: cY, scale: 0.2, opacity: 0, duration: 0.6, ease: 'power2.in' })
-                    .to(obj, { x: (Math.random() - 0.5) * 400, y: (Math.random() - 0.5) * 400, scale: 1, opacity: 0.6, duration: 1, delay: 0.2, ease: 'back.out(1.2)' });
-            });
+            }, 0.2);
         }
 
-        // Init Floating States
-        allFloating.forEach(b => {
-            b.dataset.rx = 0; b.dataset.ry = 0; b.dataset.angle = Math.random() * 360;
-            b.dataset.baseX = 0; b.dataset.baseY = 0;
-        });
-
-        // Parallax Logic
-        let mouse = { x: 0, y: 0, px: 0, py: 0 }, currentMouse = { x: 0, y: 0 };
-        window.addEventListener('mousemove', e => {
-            mouse.x = (e.clientX / window.innerWidth) - 0.5;
-            mouse.y = (e.clientY / window.innerHeight) - 0.5;
-            mouse.px = e.clientX; mouse.py = e.clientY;
-        });
-
-        function animate() {
+        // --- RENDER LOOP: PARALLAX & BREATHING ---
+        function renderLoop() {
             const time = Date.now() * 0.001;
-            currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
-            currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
-
-            modelViewer.cameraOrbit = `${(currentMouse.x * 30) + switchSpin}deg ${90 + (currentMouse.y * 15)}deg 380%`;
-
-            // Smooth Parallax Containers
-            berriesContainer.style.transform = `translate(${currentMouse.x * 40}px, ${currentMouse.y * 40}px)`;
-            leavesContainer.style.transform = `translate(${currentMouse.x * -20}px, ${currentMouse.y * -20}px)`;
-
-            if (!isSwitching) {
-                allFloating.forEach((obj, i) => {
-                    const rect = obj.getBoundingClientRect();
-                    const bX = rect.left + rect.width / 2, bY = rect.top + rect.height / 2;
-                    const dX = mouse.px - bX, dY = mouse.py - bY, dist = Math.sqrt(dX * dX + dY * dY);
-                    
-                    let tRx = 0, tRy = 0;
-                    if (dist < 400) {
-                        const f = (400 - dist) / 400;
-                        tRx = (dX / dist) * f * -60; tRy = (dY / dist) * f * -60;
-                    }
-
-                    let rx = parseFloat(obj.dataset.rx), ry = parseFloat(obj.dataset.ry), a = parseFloat(obj.dataset.angle);
-                    rx += (tRx - rx) * 0.1; ry += (tRy - ry) * 0.1; a += 0.1;
-                    obj.dataset.rx = rx; obj.dataset.ry = ry; obj.dataset.angle = a;
-
-                    const ph = (time + i * 1.5) * (Math.PI * 2 / 10);
-                    obj.style.transform = `translate(${rx}px, ${ry + Math.sin(ph) * 10}px) rotate(${a}deg)`;
-                });
-            }
-            requestAnimationFrame(animate);
+            
+            // Smooth Parallax
+            const targetX = (mouseX / window.innerWidth - 0.5);
+            const targetY = (mouseY / window.innerHeight - 0.5);
+            
+            // Idle Breathing
+            const breath = Math.sin(time * 0.8) * 15;
+            const tiltX = targetX * 30 + currentSpin;
+            const tiltY = 88 + (targetY * 12) + Math.cos(time * 0.5) * 2;
+            
+            bottle.cameraOrbit = `${tiltX}deg ${tiltY}deg 105%`;
+            
+            requestAnimationFrame(renderLoop);
         }
-        animate();
 
-        // Light Orb Generator (Replaced soda bubbles)
-        setInterval(() => {
-            const orb = document.createElement('img');
-            orb.src = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/bubble.png';
-            orb.className = 'bubble-img';
-            const size = Math.random() * 15 + 5 + 'px';
-            orb.style.width = size; orb.style.left = Math.random() * 100 + '%';
-            orb.style.bottom = '-50px'; orb.style.opacity = '0.2';
-            const dur = Math.random() * 8 + 6;
-            orb.style.animation = `floatUpImg ${dur}s ease-in forwards`;
-            document.getElementById('bubbles-container').appendChild(orb);
-            setTimeout(() => orb.remove(), dur * 1000);
-        }, 600);
+        // --- MOLECULAR MIST (CANVAS ENGINE) ---
+        function initMist() {
+            const canvas = document.querySelector('#mist-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 40 + 20;
+                    this.opacity = Math.random() * 0.3;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < -100 || this.x > canvas.width + 100 || this.y < -100 || this.y > canvas.height + 100) this.reset();
+                }
+                draw() {
+                    ctx.beginPath();
+                    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                    grad.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
+                    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 25; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
     </script>
 </body>
 </html>
