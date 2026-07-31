@@ -1,51 +1,315 @@
-export const siteConfig = {
-  business: {
-    name: "Aura Home Remodeling",
-    shortName: "Aura",
-    phone: "(555) 000-0000",
-    email: "hello@auraremodel.com",
-    city: "Los Angeles",
-    address: "123 Design District, CA 90210",
-    yearsInBusiness: 15,
-    license: "CSLB #12345678",
-    brandColors: {
-      primary: "#0A0A0A",
-      accent: "#D4AF37", // Gold
-      secondary: "#F5F5F7",
-    },
-    logo: "/logos/logo.svg",
-    socialLinks: {
-      instagram: "#",
-      facebook: "#",
-    },
-  },
-  hero: {
-    headline: "Transforming Spaces into Masterpieces.",
-    subheadline: "Luxury home renovations for those who demand excellence in every detail.",
-    ctaText: "Request a Private Consultation",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-  },
-  services: [
-    {
-      title: "Kitchen Mastery",
-      description: "State-of-the-art culinary spaces blending ergonomics with aesthetic.",
-      image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80",
-    },
-    // ... more services
-  ],
-  stats: [
-    { label: "Projects Completed", value: "450+" },
-    { label: "Design Awards", value: "12" },
-    { label: "Client Satisfaction", value: "99%" },
-  ],
-  reviews: [
-    {
-      author: "Julianne Moore",
-      role: "Homeowner",
-      content: "The level of detail is something I've only seen in high-end architecture magazines.",
-      rating: 5,
-    }
-  ]
-};
+<div class="loader">
+    <div class="loader-logo" id="loader-logo"></div>
+    <div class="loader-progress"></div>
+</div>
 
-export type SiteConfig = typeof siteConfig;
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+<div class="noise"></div>
+
+<nav>
+    <a href="#" class="logo-text" style="color: var(--primary); text-decoration: none; font-weight: 600; letter-spacing: 0.2em;">VANGUARD</a>
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#work">Our Work</a>
+        <a href="#about">Philosophy</a>
+        <a href="#contact" class="btn-wrap"><span class="btn" style="padding: 0.7rem 1.8rem; font-size: 0.6rem;">Enquire</span></a>
+    </div>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1513519247388-19345150d622?auto=format&fit=crop&q=80&w=2000" alt="Luxury Interior">
+        </div>
+        <div class="container">
+            <h1 id="hero-title"></h1>
+            <p id="hero-sub" class="reveal-text"></p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn-wrap"><span class="btn">Start Your Project</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid" id="stats-container"></div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div style="margin-bottom: 100px;">
+                <span style="color: var(--primary); text-transform: uppercase; letter-spacing: 0.4em; font-size: 0.7rem;">Specializations</span>
+                <h2 style="font-size: 4rem; margin-top: 1rem;">The Art of Finishing</h2>
+            </div>
+            <div id="services-container"></div>
+        </div>
+    </section>
+
+    <section id="comparison">
+        <div class="container">
+            <div style="margin-bottom: 60px; text-align: center;">
+                <h2 style="font-size: 3rem;">The Transformation</h2>
+                <p style="color: var(--text-muted);">Slide to reveal our restorative power.</p>
+            </div>
+            <div class="comparison-container">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000" class="comparison-img" alt="Before">
+                <div class="comparison-img comparison-after">
+                    <img src="https://images.unsplash.com/photo-1600607687940-c52fb67232a3?auto=format&fit=crop&q=80&w=2000" class="comparison-img" alt="After">
+                </div>
+                <div class="comparison-slider">
+                    <div class="slider-handle">↔</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <div class="container">
+            <div style="margin-bottom: 80px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <span style="color: var(--primary); text-transform: uppercase; letter-spacing: 0.4em; font-size: 0.7rem;">Gallery</span>
+                    <h2 style="font-size: 4rem; margin-top: 1rem;">Recent Commissions</h2>
+                </div>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&q=80&w=800"></div>
+                <div class="gallery-item tall"><img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?auto=format&fit=crop&q=80&w=800"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1615876234886-fd9a39faa97f?auto=format&fit=crop&q=80&w=800"></div>
+                <div class="gallery-item wide"><img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=1200"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1616486341353-c5833cd717b2?auto=format&fit=crop&q=80&w=800"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container" style="max-width: 900px;">
+            <div style="text-align: center; margin-bottom: 80px;">
+                <h2 style="font-size: 3rem;">Common Inquiries</h2>
+            </div>
+            <div id="faq-container"></div>
+        </div>
+    </section>
+
+    <section class="final-cta" id="contact">
+        <div class="container">
+            <h2 class="reveal-text">Secure Your Place <br>In Our Calendar.</h2>
+            <a href="#" id="cta-email" class="btn-wrap"><span class="btn">Private Consultation</span></a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-top">
+            <div>
+                <span class="footer-logo">VANGUARD</span>
+                <p style="color: var(--text-muted); font-weight: 300;" id="footer-tagline"></p>
+            </div>
+            <div class="footer-links">
+                <h5>Residences</h5>
+                <ul id="footer-areas"></ul>
+            </div>
+            <div class="footer-links">
+                <h5>Contact</h5>
+                <p style="color: var(--text); margin-bottom: 10px;" id="footer-phone"></p>
+                <p style="color: var(--text-muted);" id="footer-address"></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p id="footer-copyright"></p>
+            <p>Designed by Awwwards Selection '24</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // TEXT SPLITTING HELPER
+    function splitText(el) {
+        const text = el.innerText;
+        el.innerHTML = '';
+        text.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.innerText = char;
+            span.className = 'split-child';
+            if(char === ' ') span.style.width = '0.3em';
+            el.appendChild(span);
+        });
+    }
+
+    // INITIALIZE CONTENT
+    document.addEventListener('DOMContentLoaded', () => {
+        const loaderLogo = document.getElementById('loader-logo');
+        loaderLogo.textContent = business.name;
+
+        document.getElementById('hero-title').innerHTML = business.headline;
+        document.getElementById('hero-sub').textContent = business.subheadline;
+        document.getElementById('footer-tagline').textContent = business.tagline;
+        document.getElementById('footer-address').textContent = business.address;
+        document.getElementById('footer-phone').textContent = business.phone;
+        document.getElementById('cta-email').href = `mailto:${business.email}`;
+        document.getElementById('footer-copyright').textContent = `© ${new Date().getFullYear()} ${business.legalName}`;
+
+        // Inject Stats
+        const statsContainer = document.getElementById('stats-container');
+        business.stats.forEach(stat => {
+            statsContainer.innerHTML += `
+                <div class="stat-card">
+                    <h3><span class="count" data-target="${stat.value}">0</span>${stat.suffix || ''}</h3>
+                    <p>${stat.label}</p>
+                </div>
+            `;
+        });
+
+        // Inject Services
+        const servicesContainer = document.getElementById('services-container');
+        business.services.forEach((service, index) => {
+            servicesContainer.innerHTML += `
+                <div class="service-item">
+                    <div class="service-img-wrap" style="${index % 2 !== 0 ? 'order: 2;' : ''}">
+                        <img src="${service.image}" alt="${service.title}" class="parallax-img">
+                    </div>
+                    <div class="service-content">
+                        <span style="color: var(--primary);">0${index + 1}</span>
+                        <h3>${service.title}</h3>
+                        <p>${service.desc}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Inject FAQ
+        const faqContainer = document.getElementById('faq-container');
+        business.faqs.forEach(faq => {
+            faqContainer.innerHTML += `
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>${faq.q}</h4>
+                        <span class="plus-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>${faq.a}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        // FAQ Logic
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('active');
+            });
+        });
+
+        // Service Areas
+        const areasContainer = document.getElementById('footer-areas');
+        business.serviceAreas.forEach(area => {
+            areasContainer.innerHTML += `<li><a href="#">${area}</a></li>`;
+        });
+
+        // START ANIMATIONS
+        initGSAP();
+    });
+
+    function initGSAP() {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Lenis Smooth Scroll
+        const lenis = new Lenis();
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        // Loader
+        const tl = gsap.timeline();
+        tl.to('.loader-logo', { opacity: 1, duration: 1 })
+          .to('.loader-progress', { width: '100%', duration: 1.5, ease: 'power4.inOut' })
+          .to('.loader', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' })
+          .from('nav', { y: -50, opacity: 0, duration: 1, ease: 'power4.out' }, '-=0.5')
+          .from('.hero h1', { y: 100, opacity: 0, duration: 1.5, ease: 'power4.out' }, '-=0.8')
+          .from('.hero p', { y: 50, opacity: 0, duration: 1 }, '-=1');
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        window.addEventListener('mousemove', e => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.3 });
+        });
+
+        // Magnetic Buttons
+        const btnWraps = document.querySelectorAll('.btn-wrap');
+        btnWraps.forEach(wrap => {
+            wrap.addEventListener('mousemove', e => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width/2;
+                const y = e.clientY - rect.top - rect.height/2;
+                gsap.to(wrap.querySelector('.btn'), { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+            });
+            wrap.addEventListener('mouseleave', () => {
+                gsap.to(wrap.querySelector('.btn'), { x: 0, y: 0, duration: 0.3 });
+            });
+        });
+
+        // Parallax Images
+        gsap.utils.toArray('.parallax-img').forEach(img => {
+            gsap.to(img, {
+                yPercent: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: img.parentElement,
+                    scrub: true
+                }
+            });
+        });
+
+        // Service Image Reveal
+        gsap.utils.toArray('.service-img-wrap').forEach(wrap => {
+            gsap.to(wrap, {
+                clipPath: 'inset(0% 0 0 0)',
+                duration: 1.5,
+                ease: 'power4.inOut',
+                scrollTrigger: {
+                    trigger: wrap,
+                    start: 'top 80%'
+                }
+            });
+        });
+
+        // Stat Counter
+        gsap.utils.toArray('.count').forEach(count => {
+            ScrollTrigger.create({
+                trigger: count,
+                onEnter: () => {
+                    let target = +count.getAttribute('data-target');
+                    gsap.to(count, {
+                        innerText: target,
+                        duration: 2,
+                        snap: { innerText: 1 }
+                    });
+                }
+            });
+        });
+
+        // Before/After Slider
+        const slider = document.querySelector('.comparison-slider');
+        const afterImg = document.querySelector('.comparison-after');
+        let isResizing = false;
+
+        slider.addEventListener('mousedown', () => isResizing = true);
+        window.addEventListener('mouseup', () => isResizing = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            let rect = document.querySelector('.comparison-container').getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let percent = (x / rect.width) * 100;
+            if (percent >= 0 && percent <= 100) {
+                slider.style.left = percent + '%';
+                afterImg.style.clipPath = `inset(0 0 0 ${percent}%)`;
+            }
+        });
+    }
+  </script>
